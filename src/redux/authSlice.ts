@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
-
+import config from '../config';
 interface AuthState {
   user: { token: string } | null;
   loading: boolean;
@@ -17,7 +17,7 @@ export const login = createAsyncThunk(
   'auth/login',
   async ({ email, password }: { email: string; password: string }, { rejectWithValue }) => {
     try {
-      const response = await axios.post('http://localhost:4000/api/auth/login', { email, password });
+      const response = await axios.post(`${config.webServerUrl}/api/auth/login`, { email, password });
       return response.data;
     } catch (err: any) {
       return rejectWithValue(err.response.data);
@@ -29,7 +29,7 @@ export const register = createAsyncThunk(
   'auth/register',
   async ({ name, email, password }: { name: string; email: string; password: string }, { rejectWithValue }) => {
     try {
-      const response = await axios.post('http://localhost:4000/api/auth/register', { name, email, password });
+      const response = await axios.post(`${config.webServerUrl}/api/auth/register`, { name, email, password });
       return response.data;
     } catch (err: any) {
       return rejectWithValue(err.response.data);

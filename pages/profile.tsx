@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useAppDispatch, useAppSelector } from '../src/redux/hooks';
 import { logout, setUser } from '../src/redux/authSlice';
 import Header from './Header';
-
+import config from '@/src/config';
 const categories = ['business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology'];
 const sources = ['News API', 'The Guardian', 'OpenNews'];
 export interface IArticle {
@@ -16,9 +16,9 @@ export interface IArticle {
 }
 const Profile = () => {
   const { user } = useAppSelector((state) => state.auth);
-  const [preferredCategories, setPreferredCategories] = useState([]);
-  const [preferredSources, setPreferredSources] = useState([]);
-  const [articles, setArticles] = useState([]);
+  const [preferredCategories, setPreferredCategories] = useState<string[]>([]);
+  const [preferredSources, setPreferredSources] = useState<string[]>([]);
+  const [articles, setArticles] = useState<IArticle[]>([]);
   const dispatch = useAppDispatch();
   const router = useRouter();
 
@@ -39,7 +39,7 @@ const Profile = () => {
 
   const fetchProfileData = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/api/profile', {
+      const response = await axios.get(`${config.webServerUrl}/api/profile`, {
         headers: {
           Authorization: `Bearer ${user?.token}`,
         },
@@ -74,7 +74,7 @@ const Profile = () => {
 
   const handleSaveSettings = async () => {
     try {
-      await axios.put('http://localhost:4000/api/profile', {
+      await axios.put(`${config.webServerUrl}/api/profile`, {
         preferredCategories,
         preferredSources,
       }, {

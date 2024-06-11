@@ -42,7 +42,7 @@ const Login = () => {
         />
         <button type="submit" disabled={loading}>Login</button>
         {error && <p className="error">{error}</p>}
-        <p>Don't have an account? <Link href="/register">Register</Link></p>
+        <p>Dont have an account? <Link href="/register">Register</Link></p>
       </form>
       <style jsx>{`
         .login-container {

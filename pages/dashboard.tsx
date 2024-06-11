@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '../src/redux/hooks';
 import { logout, setUser } from '../src/redux/authSlice';
 import Header from './Header';
 import Loader from './Loader';  // Assume Loader is a spinner component
-
+import config from '@/src/config';
 const categories = ['Select', 'business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology'];
 const sources = ['Select', 'News API', 'The Guardian', 'New York Times'];
 
@@ -63,7 +63,7 @@ const Dashboard = () => {
 
   const fetchProfileData = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/api/profile', {
+      const response = await axios.get(`${config.webServerUrl}/api/profile`, {
         headers: {
           Authorization: `Bearer ${user?.token}`,
         },
@@ -79,7 +79,7 @@ const Dashboard = () => {
   const fetchNews = async (categories = preferredCategories, sources = preferredSources) => {
     setIsFetching(true);
     try {
-      const response = await axios.get('http://localhost:4000/api/news', {
+      const response = await axios.get(`${config.webServerUrl}/api/news`, {
         headers: {
           Authorization: `Bearer ${user?.token}`,
         },
@@ -106,7 +106,7 @@ const Dashboard = () => {
   const fetchMoreNews = async () => {
     setIsFetching(true);
     try {
-      const response = await axios.get('http://localhost:4000/api/news', {
+      const response = await axios.get(`${config.webServerUrl}/api/news`, {
         headers: {
           Authorization: `Bearer ${user?.token}`,
         },
